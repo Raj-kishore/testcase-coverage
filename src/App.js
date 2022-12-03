@@ -45,37 +45,41 @@ class App extends Component {
           labels: {
             format: '{value}°C',
             style: {
-              color: Highcharts.getOptions().colors[1]
+              color: "rgba(0,0,0,0)"
             }
           },
           title: {
             text: 'Temperature',
             style: {
-              color: Highcharts.getOptions().colors[1]
+              color: "rgba(0,0,0,0)"
             }
           }
         }, { // Secondary yAxis
           title: {
             text: 'Precipitation',
             style: {
-              color: Highcharts.getOptions().colors[0]
+              color: "rgba(0,0,0,0)"
             }
           },
           labels: {
             format: '{value} mm',
             style: {
-              color: Highcharts.getOptions().colors[0]
+              color: "rgba(0,0,0,0)"
             }
           },
           opposite: true
         }],
         tooltip: {
           shared: true,
-          formatter() {
-
-            return `<b>${x}</b><br/>${series.name}: ${y}`;
-
+          formatter () { 
+          
+            if(this.y < 50){
+              return  ` Data not available `;
+            }else{
+              return  `<b>${this.x}</b><br/> ${this.y}`;
+            }
           }
+          
         },
         legend: {
           align: 'left',
@@ -87,25 +91,16 @@ class App extends Component {
             Highcharts.defaultOptions.legend.backgroundColor || // theme
             'rgba(255,255,255,0.25)'
         },
-        series: [{
+        series: {
           name: 'Precipitation',
           type: 'column',
           yAxis: 1,
-          data: [27.6, 28.8, 21.7, 34.1, 29.0, 28.4, 45.6, 51.7, 39.0,
-            60.0, 28.6, 32.1],
+          data: [10,20,30,40,50,60,70,80,90,100],
           tooltip: {
             valueSuffix: ' mm'
           }
 
-        }, {
-          name: 'Temperature',
-          type: 'spline',
-          data: [-13.6, -14.9, -5.8, -0.7, 3.1, 13.0, 14.5, 10.8, 5.8,
-          -0.7, -11.0, -16.4],
-          tooltip: {
-            valueSuffix: '°C'
-          }
-        }]
+        }
       }
     })
   }
